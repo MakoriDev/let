@@ -1,3 +1,24 @@
+document.addEventListener('DOMContentLoaded', function() {
+  var videoPlayLinks = document.querySelectorAll('.videoplay');
+  videoPlayLinks.forEach(function(link) {
+    link.addEventListener('click', function() {
+      var videoId = this.getAttribute('data-video-id');
+      var imgBlock = this.parentElement.parentElement.querySelector('.img-block');
+      var videoPlaceholder = this.parentElement.parentElement.querySelector('#video-placeholder');
+
+      var iframeHtml = '<iframe width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+      videoPlaceholder.innerHTML = iframeHtml;
+
+      var iframe = videoPlaceholder.querySelector('iframe');
+      iframe.src = "https://www.youtube.com/embed/" + videoId;
+      
+      imgBlock.style.display = 'none';
+      videoPlaceholder.style.display = 'block';
+    });
+  });
+});
+
+
 document.addEventListener("DOMContentLoaded", function() {
   const textElement = document.querySelector('.block h1');
   const text = textElement.textContent;
