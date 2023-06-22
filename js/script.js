@@ -1,9 +1,28 @@
-/**
- * WEBSITE: https://themefisher.com
- * TWITTER: https://twitter.com/themefisher
- * FACEBOOK: https://www.facebook.com/themefisher
- * GITHUB: https://github.com/themefisher/
- */
+
+
+	// Get the text element
+	const textElement = document.querySelector('.block h1');
+	// Get the text content
+	const text = textElement.textContent;
+	// Clear the text content
+	textElement.textContent = '';
+
+	let index = 0;
+	const typingSpeed = 250; // Adjust typing speed (in milliseconds) here
+
+	function typeText() {
+		if (index < text.length) {
+			// Append next character to the text content
+			textElement.textContent += text.charAt(index);
+			index++;
+			setTimeout(typeText, typingSpeed);
+		}
+	}
+
+	// Call the typing function
+	typeText();
+
+
 
 (function ($) {
   "use strict";
