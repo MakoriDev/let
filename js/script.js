@@ -1,30 +1,23 @@
+document.addEventListener("DOMContentLoaded", function() {
+  const textElement = document.querySelector('.block h1');
+  const text = textElement.textContent;
+  textElement.textContent = '';
 
+  let index = 0;
+  const typingSpeed = 50;
 
-	// Get the text element
-	const textElement = document.querySelector('.block h1');
-	// Get the text content
-	const text = textElement.textContent;
-	// Clear the text content
-	textElement.textContent = '';
+  function typeText() {
+    if (index < text.length) {
+      textElement.textContent += text.charAt(index);
+      index++;
+      setTimeout(typeText, typingSpeed);
+    }
+  }
 
-	let index = 0;
-	const typingSpeed = 250; // Adjust typing speed (in milliseconds) here
+  typeText();
+});
 
-	function typeText() {
-		if (index < text.length) {
-			// Append next character to the text content
-			textElement.textContent += text.charAt(index);
-			index++;
-			setTimeout(typeText, typingSpeed);
-		}
-	}
-
-	// Call the typing function
-	typeText();
-
-
-
-(function ($) {
+(function($) {
   "use strict";
 
   $(document).ready(function() {
@@ -33,32 +26,20 @@
       event.preventDefault();
       var target = $(this.getAttribute('href'));
       if (target.length) {
-        scrollTo(target.offset().top);
+        $('html, body').animate({
+          scrollTop: target.offset().top
+        }, 800);
       }
     });
   });
 
-  // Smooth scrolling function with debounce
-  var scrolling = false;
-  function scrollTo(targetPosition) {
-    if (!scrolling) {
-      scrolling = true;
-      $('html, body').stop().animate({
-        scrollTop: targetPosition
-      }, 800, function() {
-        scrolling = false;
-      });
-    }
-  }
-
-  // Rest of the script...
-
-  $(".navbar-burger").click(function () {
+  $(".navbar-burger").click(function() {
     $(".navbar-burger").toggleClass("is-active");
     $(".navbar-menu").toggleClass("is-active");
   });
+
   if ($(window).width() < 1024) {
-    $(".navbar-menu .has-dropdown").on("click", function (e) {
+    $(".navbar-menu .has-dropdown").on("click", function(e) {
       $(this).children(".navbar-dropdown").toggle();
     });
   }
@@ -86,8 +67,7 @@
     arrows: false,
     autoplay: true,
     autoplaySpeed: 6000,
-    responsive: [
-      {
+    responsive: [{
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
@@ -120,7 +100,7 @@
     ],
   });
 
-  $(".gallery-wrap").each(function () {
+  $(".gallery-wrap").each(function() {
     $(this)
       .find(".gallery-popup")
       .magnificPopup({
@@ -137,12 +117,8 @@
     var mapOptions = {
       zoom: 13,
       center: new google.maps.LatLng(50.97797382271958, -114.107718560791),
-      // styles: style_array_here
     };
-    map = new google.maps.Map(
-      document.getElementById("map-canvas"),
-      mapOptions
-    );
+    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   }
 
   var google_map_canvas = $("#map-canvas");
@@ -151,13 +127,8 @@
     google.maps.event.addDomListener(window, "load", initialize);
   }
 
-  // Counter
-
   $(".counter-stat").counterUp({
     delay: 10,
     time: 1000,
   });
 })(jQuery);
-
-
-
