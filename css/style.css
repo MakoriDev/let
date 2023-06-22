@@ -9,6 +9,7 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700|Bitter:400,700,900&display=swap");
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {

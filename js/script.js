@@ -8,6 +8,21 @@
 (function ($) {
   "use strict";
 
+  $(document).ready(function() {
+    // Smooth scrolling for internal links
+    $('a[href^="#"]').on('click', function(event) {
+      event.preventDefault();
+      var target = $(this.getAttribute('href'));
+      if (target.length) {
+        $('html, body').stop().animate({
+          scrollTop: target.offset().top
+        }, 800); // Adjust the animation speed here (in milliseconds)
+      }
+    });
+  });
+
+  // Rest of the script...
+
   $(".navbar-burger").click(function () {
     $(".navbar-burger").toggleClass("is-active");
     $(".navbar-menu").toggleClass("is-active");
@@ -113,3 +128,6 @@
     time: 1000,
   });
 })(jQuery);
+
+
+
