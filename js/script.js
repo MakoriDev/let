@@ -14,12 +14,23 @@
       event.preventDefault();
       var target = $(this.getAttribute('href'));
       if (target.length) {
-        $('html, body').stop().animate({
-          scrollTop: target.offset().top
-        }, 800); // Adjust the animation speed here (in milliseconds)
+        scrollTo(target.offset().top);
       }
     });
   });
+
+  // Smooth scrolling function with debounce
+  var scrolling = false;
+  function scrollTo(targetPosition) {
+    if (!scrolling) {
+      scrolling = true;
+      $('html, body').stop().animate({
+        scrollTop: targetPosition
+      }, 800, function() {
+        scrolling = false;
+      });
+    }
+  }
 
   // Rest of the script...
 
