@@ -1830,3 +1830,72 @@ h3.quote::before {
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+
+
+
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  position: relative;
+  text-align: center;
+  font-size: 18px;
+  background: gray;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: left;
+
+
+}
+
+section.slider {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.slide-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+ 
+}
+
+.container1 {
+  z-index: 2;
+  width: 50%;
+  margin-right: 10%;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.swiper-slide:hover .slide-image {
+  transform: translate(-50%, -50%) scale(1.15) rotate(Odeg);
+}
+
+.block {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+}
