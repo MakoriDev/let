@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Blogs | Black Coffee Network</title>
+    <link rel="stylesheet" href="/path/to/your/css">
+    <!-- Other head elements -->
+</head>
+<body>
+    <h1>All Blog Posts</h1>
+    <div class="blog-list">
+        <% blogs.forEach(function(blog) { %>
+            <div class="blog-post">
+                <h2><a href="/blog/blog-single/<%= blog._id %>"><%= blog.title %></a></h2>
+                <p><%= blog.content.substring(0, 100) %>...</p>
+                <!-- More blog details -->
+            </div>
+        <% }); %>
+    </div>
+    <!-- Navigation back to home or other parts of your site -->
+    <a href="/">Back to Home</a>
+</body>
+</html>

@@ -1,14 +1,16 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const Blog = require('./models/blog'); // Ensure this path is correct based on your project structure
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoDb = process.env.MONGO_URI;
 
-// Create connection
+// Import the blogRoutes
+const blogRoutes = require('./routes/blogRoutes'); // Adjust the path as necessary
+
+// Create connection to MongoDB
 mongoose.connect(mongoDb, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error('MongoDB Connection err:', err));
@@ -17,61 +19,36 @@ mongoose.connect(mongoDb, { useNewUrlParser: true, useUnifiedTopology: true })
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Serve static files from 'public' directory (for CSS, JS, images, etc.)
+// Serve static files from 'public' directory
 app.use(express.static('public'));
 
 // Middleware to parse request bodies
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Use blogRoutes for any requests that start with '/blog'
+app.use('/blog', blogRoutes);
+
 // Serve index.ejs for the root route, including dynamic blog data
+// Assuming you still want to show recent blogs on the homepage
 app.get('/', async (req, res) => {
+  const Blog = require('./models/blog'); // Ensure this path is correct
   try {
-    const blogs = await Blog.find().sort({ createdAt: -1 }).limit(3); // Fetch blogs from MongoDB
-    console.log('blogs');
-    res.render('index', { blogs }); // Pass blogs data to the index.ejs file
+    const blogs = await Blog.find().sort({ createdAt: -1 }).limit(3);
+    res.render('index', { blogs });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error fetching blog data');
   }
 });
 
-// Route to display the form for adding a new blog
-app.get('/blog', (req, res) => {
-  res.render('blog'); // Render the form for adding a new blog
-});
-
-// Route to handle the form submission for a new blog post
-app.post('/blog', async (req, res) => {
-  try {
-    const newBlog = new Blog({
-      title: req.body.title,
-      content: req.body.content,
-    });
-
-    await newBlog.save(); // Save the new blog to MongoDB
-    res.render('blog', { message: 'Blog post succesfull!'});
-   
-  } catch (error) {
-    console.error('Error saving new blog:', error);
-    res.render('blog', { message: 'Failed to add new blog.'})
-    res.status(500).send('Failed to add new blog');
-  }
-});
-
-// Function to create route handlers for other EJS files
-const servePage = (page) => (req, res) => {
-  res.render(page); // Render the page without '.html'
-};
-
-// Define routes for other pages based on their names and expected URLs
+// Dynamically create routes for each page not covered by blogRoutes
 const pages = [
   'about',
   'contact',
   'donation',
   'event',
   'event-single',
-  'blog-single',
   'cause-single',
   'confirmation',
   'pricing',
@@ -79,9 +56,10 @@ const pages = [
   'volunteer',
 ];
 
-// Dynamically create routes for each page
 pages.forEach(page => {
-  app.get(`/${page}`, servePage(page));
+  app.get(`/${page}`, (req, res) => {
+    res.render(page); // Render the page directly without '.html'
+  });
 });
 
 // Catch-all for 404 Not Found responses
