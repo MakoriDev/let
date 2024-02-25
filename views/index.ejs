@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="/plugins/slick-carousel/slick/slick.css">
   <link rel="stylesheet" href="/plugins/slick-carousel/slick/slick-theme.css">
   <link rel="stylesheet" href="/plugins/modal-video/modal-video.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="/css/style.css">
@@ -33,6 +34,7 @@
   <!-- In your HTML head or before closing body tag -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
@@ -47,7 +49,15 @@
 </head>
 
 <body>
+<div class="container">
+	<div class="columns">
 
+		<div class="column is-1">
+
+			<!--left column-->
+		</div>
+
+		<div class="column is-10">
 <!-- Header Start --> 
 <header class="navigation">
 	<div class="header-top ">
@@ -113,12 +123,11 @@
 						</div>
 					</li>
 
-					<li class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link">Blog +</a>
-						<div class="navbar-dropdown align-right">
-							 
-							<a class="navbar-item" href="/blog-single">Blog Single</a>
-						</div>
+					
+
+					<li class="navbar-item">
+						<a class="navbar-link" href="/blog-single">Blog</a>
+						
 					</li>
 					
 					<li class="navbar-item">
@@ -133,49 +142,73 @@
 <!-- Slider Start -->
 
 
-<section class="slider">
-	<div class="swiper-container">
-	  <div class="swiper-wrapper">
-		<!-- Slide 1 -->
-		<div class="swiper-slide">
-			<img src="/images/logo.png" alt="Feminism" class="slide-image">
-		  <div class="container1">
-			
-			<div class="columns is-justify-content-center">
-			  <div class="column is-9-desktop is-10-tablet">
-				<div class="block has-text-centered">
-				  <h1 class="mb-5">Black Coffee Network</h1>
-				  <span class="is-block mb-4 text-white is-capitalized">Cheers to the Network</span>
-				  <a href="/volunteer" target="_blank" class="btn btn-main is-rounded">Join BCN</a>
-				</div>
-			  </div>
-			</div>
-		  </div>
-		</div>
-		<!-- Slide 2 (add as many slides as you need following the same structure) -->
-		<div class="swiper-slide">
-			<img src="/images/logo.png" alt="Masculinity" class="slide-image">
-		  <div class="container1">
-			<div class="columns is-justify-content-center">
-			  <div class="column is-9-desktop is-10-tablet">
-				<div class="block has-text-centered">
-				  <h1 class="mb-5">Join Our Mission</h1>
-				  <span class="is-block mb-4 text-white is-capitalized">Make a Difference</span>
-				  <a href="/volunteer" target="_blank" class="btn btn-main is-rounded">Become a Volunteer</a>
-				</div>
-			  </div>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	  <!-- Add Pagination -->
-	  <div class="swiper-pagination"></div>
+<!-- Slider Section -->
+<!-- Slideshow container -->
+<div class="slideshow-container">
+
+	<!-- Full-width images with number and caption text -->
+	<div class="mySlides fade">
+	  
+	  <img src="/images/test.jpg" style="width:100%">
+	  <div class="text">Mental Health Champions, Presented by: Karuga</div>
 	</div>
-  </section>
   
+	<div class="mySlides fade">
+	  
+	  <img src="/images/test1.jpg" style="width:100%">
+	  <div class="text">Caption Two</div>
+	</div>
+  
+	<div class="mySlides fade">
+	  
+	  <img src="/images/test2.jpg" style="width:100%">
+	  <div class="text">Next Lounge is on Mental Wellness</div>
+	</div>
+  
+	<!-- Next and previous buttons -->
+	<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+	<a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+  <br>
+  
+  <!-- The dots/circles -->
+  <div style="text-align:center">
+	<span class="dot" onclick="currentSlide(1)"></span>
+	<span class="dot" onclick="currentSlide(2)"></span>
+	<span class="dot" onclick="currentSlide(3)"></span>
+  </div>
 
 
 
+
+  <section class="section latest-blog">
+    <div class="container">
+        <div class="columns is-justify-content-center is-desktop">
+            <div class="column is-7-desktop has-text-centered">
+                <div class="section-title">
+                    <span class="h6 text-color">Thursday Lounges</span>
+                    <h2 class="mt-4 content-title">Latest Topics</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns is-multiline is-justify-content-center">
+            <% blogs.forEach(function(blog) { %>
+                <div class="column is-4-desktop is-6-tablet">
+                    <div class="blog-item">
+                        <img src="images/blog/blog_placeholder.jpg" alt="" class=""> <!-- Placeholder image or dynamic if you have it -->
+
+                        <div class="card-body mt-2">
+                            <span class="text-sm text-color is-uppercase has-text-weight-bold">Admin</span>
+                            <h3 class="mb-3"><a href="/blog-single/<%= blog._id %>" class=""><%= blog.title %></a></h3>
+                            <p class="mb-4"><%= blog.content.substring(0, 100) %>...</p> <!-- Show excerpt -->
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
 
 <!-- Section Intro Start -->
 <section class="section intro">
@@ -448,33 +481,7 @@
 	</div>
 </div>
 
-<section class="section latest-blog">
-    <div class="container">
-        <div class="columns is-justify-content-center is-desktop">
-            <div class="column is-7-desktop has-text-centered">
-                <div class="section-title">
-                    <span class="h6 text-color">Our Thursday Discussion Topics</span>
-                    <h2 class="mt-4 content-title">Latest</h2>
-                </div>
-            </div>
-        </div>
 
-        <div class="columns is-multiline is-justify-content-center">
-            <% blogs.forEach(function(blog) { %>
-                <div class="column is-4-desktop is-6-tablet">
-                    <div class="blog-item">
-                        <img src="images/blog/blog_placeholder.jpg" alt="" class=""> <!-- Placeholder image or dynamic if you have it -->
-
-                        <div class="card-body mt-2">
-                            <span class="text-sm text-color is-uppercase has-text-weight-bold">Admin</span>
-                            <h3 class="mb-3"><a href="/blog-single/<%= blog._id %>" class=""><%= blog.title %></a></h3>
-                            <p class="mb-4"><%= blog.content.substring(0, 100) %>...</p> <!-- Show excerpt -->
-                        </div>
-                    </div>
-                </div>
-            <% }); %>
-        </div>
-    </div>
 </section>
 
 
@@ -651,32 +658,41 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script>    
     
     <script src="/js/script.js"></script>
+	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+	
+
+
 
 	
 	<script>
-		var swiper = new Swiper('.swiper-container', {
-		  // Swiper options
-		  loop: true,
-		  pagination: {
-			el: '.swiper-pagination',
-			clickable: true,
-		  },
-		  // Navigation arrows
-		  navigation: {
-			nextEl: '.swiper-button-next',
-			prevEl: '.swiper-button-prev',
-		  },
+		let slideIndex = 0;
+showSlides();
 
-		  autoplay: {
-			delay: 90000,
-		  },
-		  // And if you need scrollbar
-		  scrollbar: {
-			el: '.swiper-scrollbar',
-		  },
-		});
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  slides[slideIndex-1].style.display = "block";
+  setTimeout(showSlides, 6000); // Change image every 2 seconds
+}
 	  </script>
-	  
+
+</div>
+
+<!--right column-->
+
+<div class="column is-1">
+
+</div>
+
+	  </div>
+
+</div>
 
   </body>
   </html>

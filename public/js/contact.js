@@ -1,45 +1,16 @@
-/**
- * WEBSITE: https://themefisher.com
- * TWITTER: https://twitter.com/themefisher
- * FACEBOOK: https://www.facebook.com/themefisher
- * GITHUB: https://github.com/themefisher/
- */
 
-(function ($) {
-  "use strict";
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting via the browser
 
-  var form = $(".contact__form"),
-    message = $(".contact__msg"),
-    form_data;
+    var name = document.querySelector('input[name="name"]').value;
+    var email = document.querySelector('input[name="email"]').value;
+    var subject = document.querySelector('input[name="subjecte"]').value; // Ensure this matches your input's name attribute
+    var phone = document.querySelector('input[name="phone"]').value;
+    var message = document.querySelector('textarea[name="message"]').value;
 
-  // Success function
-  function done_func(response) {
-    message.fadeIn().removeClass("alert-danger").addClass("alert-success");
-    message.text(response);
-    setTimeout(function () {
-      message.fadeOut();
-    }, 2000);
-    form.find('input:not([type="submit"]), textarea').val("");
-  }
+    var whatsappNumber = "254704166140"; // Your WhatsApp number in international format without '+'
+    var textMessage = `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\nPhone: ${phone}\nMessage: ${message}`;
+    var whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(textMessage)}`;
 
-  // fail function
-  function fail_func(data) {
-    message.fadeIn().removeClass("alert-success").addClass("alert-success");
-    message.text(data.responseText);
-    setTimeout(function () {
-      message.fadeOut();
-    }, 2000);
-  }
-
-  form.submit(function (e) {
-    e.preventDefault();
-    form_data = $(this).serialize();
-    $.ajax({
-      type: "POST",
-      url: form.attr("action"),
-      data: form_data,
-    })
-      .done(done_func)
-      .fail(fail_func);
-  });
-})(jQuery);
+    window.open(whatsappUrl, '_blank'); // Open WhatsApp in a new tab/window
+});

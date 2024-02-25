@@ -27,7 +27,8 @@ app.use(express.json());
 // Serve index.ejs for the root route, including dynamic blog data
 app.get('/', async (req, res) => {
   try {
-    const blogs = await Blog.find(); // Fetch blogs from MongoDB
+    const blogs = await Blog.find().sort({ createdAt: -1 }).limit(3); // Fetch blogs from MongoDB
+    console.log('blogs');
     res.render('index', { blogs }); // Pass blogs data to the index.ejs file
   } catch (error) {
     console.error(error);
