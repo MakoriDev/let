@@ -196,12 +196,14 @@
             <% blogs.forEach(function(blog) { %>
                 <div class="column is-4-desktop is-6-tablet">
                     <div class="blog-item">
-                    
-
                         <div class="card-body mt-2">
                             <span class="text-sm text-color is-uppercase has-text-weight-bold">Admin</span>
-                            <h3 class="mb-3"><a href="/blog-single/<%= blog._id %>" class=""><%= blog.title %></a></h3>
-                            <p class="mb-4"><%= blog.content.substring(0, 100) %>...</p> <!-- Show excerpt -->
+                            <h3 class="mb-3"><a href="/blog/blog-single/<%= blog._id %>" class=""><%= blog.title %></a></h3>
+                            <% if(blog.content) { %>
+                                <p class="mb-4"><%= blog.content.substring(0, 100) %>...</p> <!-- Show excerpt -->
+                            <% } else { %>
+                                <p class="mb-4">No content available.</p> <!-- Fallback message -->
+                            <% } %>
                         </div>
                     </div>
                 </div>
@@ -209,6 +211,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- Section Intro Start -->
 <section class="section intro">
@@ -245,10 +248,7 @@
 					<h4 class="mt-4 mb-3">Our Goals</h4>
 					<p>
 						<ul>Meaningful Youth participation</ul>
-						<ul>Meaningful Youth participation</ul>
-						<ul>Meaningful Youth participation</ul>
-						<ul>Meaningful Youth participation</ul>
-						<ul>Meaningful Youth participation</ul>
+						
 						
 					</p>
 					
@@ -261,9 +261,7 @@
 					<p>
 						<ul>Team Mocha</ul>
 						<ul>Team Latte</ul>
-						<ul>Team Mocha</ul>
-						<ul>Team Mocha</ul>
-						<ul>Team Mocha</ul>
+						
 					</p>
 				</div>
 			</div> 
@@ -450,7 +448,7 @@
 			</div>
 			<div class="column is-4-desktop is-6-tablet">
 				<div class="cause-item">
-					<img src="images/about/banner.jpg" class=" w-100" alt="...">
+					<img src="images/logo.png" class=" w-100" alt="...">
 
 					<div class="card-body">
 						<h3 class="mb-4"><a href="/cause-single">Orphanage</a></h3>
@@ -559,7 +557,7 @@
 
 					<ul class="list-unstyled footer-menu mt-4">
 						<li><a href="tel:+25470624712"><i class="icofont-phone"></i>+2547 06 24 712</a></li>
-						<li><a href="#"><i class="icofont-email"></i>info@example.com</a></li>
+						<li><a href="#"><i class="icofont-email"></i>support@gmail.com</a></li>
 					</ul>
 					<ul class="list-inline footer-socials">
 						<li class="list-inline-item"><a href="https://www.facebook.com/blackcoffeenetwork?mibextid=ZbWKwL"><i class="icofont-facebook"></i></a></li>

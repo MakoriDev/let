@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Blogs | Black Coffee Network</title>
-    <link rel="stylesheet" href="/path/to/your/css">
+    <link rel="stylesheet" href="/css/style.css">
     <!-- Other head elements -->
 </head>
 <body>
@@ -13,7 +13,11 @@
         <% blogs.forEach(function(blog) { %>
             <div class="blog-post">
                 <h2><a href="/blog/blog-single/<%= blog._id %>"><%= blog.title %></a></h2>
-                <p><%= blog.content.substring(0, 100) %>...</p>
+                <% if(blog.content) { %>
+                    <p><%= blog.content.substring(0, 100) %>...</p>
+                <% } else { %>
+                    <p>No content available.</p>
+                <% } %>
                 <!-- More blog details -->
             </div>
         <% }); %>

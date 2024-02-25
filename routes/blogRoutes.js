@@ -2,37 +2,24 @@ const express = require('express');
 const Blog = require('../models/blog'); // Adjust the path as necessary
 const router = express.Router();
 
-// Route to serve a list of blog posts or the main blog page
-router.get('/', async (req, res) => {
-    try {
-        const blogs = await Blog.find().sort({ createdAt: -1 });
-        res.render('index', { blogs });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error fetching blog data');
-    }
+// Display the form for adding a new blog at '/blog/new'
+router.get('/new', (req, res) => {
+    res.render('blog'); // Render the form located at 'views/blog.ejs'
 });
 
-
-
-// Route to display the form for adding a new blog
-router.get('/blog', (req, res) => {
-    res.render('blog');
-});
-
-// Route to handle the form submission for a new blog post
-router.post('/blog', async (req, res) => {
+// Handle form submission for adding a new blog at '/blog/new'
+router.post('/new', async (req, res) => {
     try {
         const newBlog = new Blog(req.body);
         await newBlog.save();
-        res.redirect('/'); // Redirect to the blog list or confirmation page
+        res.redirect('/blog/all'); // After adding, redirect to see all blogs
     } catch (error) {
         console.error('Error saving new blog:', error);
         res.status(500).send('Failed to add new blog');
     }
 });
 
-// Route to display an individual blog post
+// Display an individual blog post
 router.get('/blog-single/:id', async (req, res) => {
     try {
         const blogId = req.params.id;
@@ -47,15 +34,15 @@ router.get('/blog-single/:id', async (req, res) => {
     }
 });
 
+// Display all blog posts at '/blog/all'
 router.get('/all', async (req, res) => {
     try {
-        const blogs = await Blog.find().sort({ createdAt: -1 }); // Fetch all blogs
-        res.render('all-blogs', { blogs });
+        const blogs = await Blog.find().sort({ createdAt: -1 });
+        res.render('all-blogs', { blogs }); // Ensure 'all-blogs.ejs' is in the 'views' directory
     } catch (error) {
         console.error(error);
         res.status(500).send('Error fetching all blog data');
     }
 });
-
 
 module.exports = router;

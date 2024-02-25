@@ -10,6 +10,7 @@ const mongoDb = process.env.MONGO_URI;
 // Import the blogRoutes
 const blogRoutes = require('./routes/blogRoutes'); // Adjust the path as necessary
 
+
 // Create connection to MongoDB
 mongoose.connect(mongoDb, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected'))
@@ -54,6 +55,8 @@ const pages = [
   'pricing',
   'service',
   'volunteer',
+  'blog'
+  
 ];
 
 pages.forEach(page => {
