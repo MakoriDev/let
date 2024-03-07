@@ -84,7 +84,7 @@
 	<nav id="navbar" class="navbar main-nav">
 		<div class="container">
 			<div class="navbar-brand">
-				<a class="navbar-item" href="/index">
+				<a class="navbar-item" href="/">
 					<img src="images/logo.png" alt="logo">
 				</a>
 				<button role="button" class="navbar-burger burger" data-hidden="true" data-target="navigation">
@@ -126,7 +126,7 @@
 					
 
 					<li class="navbar-item">
-						<a class="navbar-link" href="/all-blogs">Blog</a>
+						<a class="navbar-link" href="/blog/all">Blog</a>
 						
 					</li>
 					
@@ -193,22 +193,25 @@
         </div>
 
         <div class="columns is-multiline is-justify-content-center">
-            <% blogs.forEach(function(blog) { %>
-                <div class="column is-4-desktop is-6-tablet">
-                    <div class="blog-item">
-                        <div class="card-body mt-2">
-                            <span class="text-sm text-color is-uppercase has-text-weight-bold">Admin</span>
-                            <h3 class="mb-3"><a href="/blog/blog-single/<%= blog._id %>" class=""><%= blog.title %></a></h3>
-                            <% if(blog.content) { %>
-                                <p class="mb-4"><%= blog.content.substring(0, 100) %>...</p> <!-- Show excerpt -->
-                            <% } else { %>
-                                <p class="mb-4">No content available.</p> <!-- Fallback message -->
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
-            <% }); %>
-        </div>
+			<% blogs.forEach(function(blog) { %>
+				<div class="column is-4-desktop is-6-tablet">
+					<div class="blog-item">
+						<div class="card-body mt-2">
+							<span class="text-sm text-color is-uppercase has-text-weight-bold">Admin</span>
+							<h3 class="mb-3"><a href="/blog/blog-single/<%= blog.id %>" class=""><%= blog.title %></a></h3>
+							<% if(blog.content) { %>
+								<p class="mb-4"><%= blog.content.substring(0, 100) %>...</p> <!-- Show excerpt -->
+							<% } else { %>
+								<p class="mb-4">No content available.</p> <!-- Fallback message -->
+							<% } %>
+						</div>
+					</div>
+				</div>
+			<% }); %>
+		</div>
+		
+
+
     </div>
 </section>
 

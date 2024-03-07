@@ -12,7 +12,7 @@
     <div class="blog-list">
         <% blogs.forEach(function(blog) { %>
             <div class="blog-post">
-                <h2><a href="/blog/blog-single/<%= blog._id %>"><%= blog.title %></a></h2>
+                <h2><a href="/blog/blog-single/<%= blog.id %>"><%= blog.title %></a></h2>
                 <% if(blog.content) { %>
                     <p><%= blog.content.substring(0, 100) %>...</p>
                 <% } else { %>

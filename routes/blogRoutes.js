@@ -1,48 +1,54 @@
 const express = require('express');
-const Blog = require('../models/blog'); // Adjust the path as necessary
 const router = express.Router();
 
-// Display the form for adding a new blog at '/blog/new'
-router.get('/new', (req, res) => {
-    res.render('blog'); // Render the form located at 'views/blog.ejs'
-});
+module.exports = (pool) => {
 
-// Handle form submission for adding a new blog at '/blog/new'
-router.post('/new', async (req, res) => {
-    try {
-        const newBlog = new Blog(req.body);
-        await newBlog.save();
-        res.redirect('/blog/all'); // After adding, redirect to see all blogs
-    } catch (error) {
-        console.error('Error saving new blog:', error);
-        res.status(500).send('Failed to add new blog');
-    }
-});
+    // Display the form for adding a new blog at '/blog/new'
+    router.get('/new', (req, res) => {
+        res.render('blog'); // Render the form located at 'views/blog.ejs'
+    });
 
-// Display an individual blog post
-router.get('/blog-single/:id', async (req, res) => {
-    try {
-        const blogId = req.params.id;
-        const blog = await Blog.findById(blogId);
-        if (!blog) {
-            return res.status(404).send('Blog post not found');
+    // Handle form submission for adding a new blog at '/blog/new'
+    router.post('/new', async (req, res) => {
+        try {
+            const { title, content, author } = req.body;
+            const sql = 'INSERT INTO blogs (title, content, author) VALUES (?, ?, ?)';
+            await pool.query(sql, [title, content, author]);
+            res.redirect('/blog/all'); // After adding, redirect to see all blogs
+        } catch (error) {
+            console.error('Error saving new blog:', error);
+            res.status(500).send('Failed to add new blog');
         }
-        res.render('blog-single', { blog });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error');
-    }
-});
+    });
 
-// Display all blog posts at '/blog/all'
-router.get('/all', async (req, res) => {
-    try {
-        const blogs = await Blog.find().sort({ createdAt: -1 });
-        res.render('all-blogs', { blogs }); // Ensure 'all-blogs.ejs' is in the 'views' directory
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error fetching all blog data');
-    }
-});
+    // Display an individual blog post
+    router.get('/blog-single/:id', async (req, res) => {
+        try {
+            const blogId = req.params.id;
+            const sql = 'SELECT * FROM blogs WHERE id = ?';
+            const [blogs] = await pool.query(sql, [blogId]);
+            const blog = blogs[0];
+            if (!blog) {
+                return res.status(404).send('Blog post not found');
+            }
+            res.render('blog-single', { blog });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
+    });
 
-module.exports = router;
+    // Display all blog posts at '/blog/all'
+    router.get('/all', async (req, res) => {
+        try {
+            const sql = 'SELECT * FROM blogs ORDER BY createdAt DESC';
+            const [blogs] = await pool.query(sql);
+            res.render('all-blogs', { blogs }); // Ensure 'all-blogs.ejs' is in the 'views' directory
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Error fetching all blog data');
+        }
+    });
+
+    return router;
+};

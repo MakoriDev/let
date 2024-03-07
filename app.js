@@ -1,46 +1,57 @@
 const express = require('express');
 const path = require('path');
-const mongoose = require('mongoose');
+const mysql = require('mysql2/promise');
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const mongoDb = process.env.MONGO_URI;
 
-// Import the blogRoutes
-const blogRoutes = require('./routes/blogRoutes'); // Adjust the path as necessary
+// MySQL Pool Connection
+const pool = mysql.createPool({
+    connectionLimit: 10,
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DB
+});
 
+// Session Store
+const sessionStore = new MySQLStore({}, pool);
 
-// Create connection to MongoDB
-mongoose.connect(mongoDb, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error('MongoDB Connection err:', err));
+app.use(session({
+    key: 'session_cookie_name',
+    secret: 'session_cookie_secret',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+}));
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Serve static files from 'public' directory
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware to parse request bodies
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Use blogRoutes for any requests that start with '/blog'
+// Import and use blogRoutes with MySQL pool
+const blogRoutes = require('./routes/blogRoutes')(pool); // Make sure your blogRoutes are adapted for MySQL
 app.use('/blog', blogRoutes);
 
-// Serve index.ejs for the root route, including dynamic blog data
-// Assuming you still want to show recent blogs on the homepage
+// Serve index.ejs for the root route
 app.get('/', async (req, res) => {
-  const Blog = require('./models/blog'); // Ensure this path is correct
-  try {
-    const blogs = await Blog.find().sort({ createdAt: -1 }).limit(3);
-    res.render('index', { blogs });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error fetching blog data');
-  }
+    try {
+        const [blogs] = await pool.query('SELECT * FROM blogs ORDER BY createdAt DESC LIMIT 3');
+        res.render('index', { blogs });
+    } catch (error) {
+        console.error('Error fetching blog data:', error);
+        res.status(500).send('Error fetching blog data');
+    }
 });
 
 // Dynamically create routes for each page not covered by blogRoutes
@@ -56,7 +67,6 @@ const pages = [
   'service',
   'volunteer',
   'blog'
-  
 ];
 
 pages.forEach(page => {
@@ -69,6 +79,9 @@ pages.forEach(page => {
 app.use((req, res) => {
   res.status(404).render('404'); // Use render for 404.ejs
 });
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
