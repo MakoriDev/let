@@ -92,11 +92,8 @@
 					
 
 					<li class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link">Blog +</a>
-						<div class="navbar-dropdown align-right">
-							
-							<a class="navbar-item" href="/blog-single">Blog Single</a>
-						</div>
+						<a class="navbar-link" href="/blog/all">Blog +</a>
+						
 					</li>
 					
 					<li class="navbar-item">
@@ -324,6 +321,21 @@
     
     <script src="/js/script.js"></script>
     <script src="/js/contact.js"></script>
+
+    <script>
+      function initMap() {
+    var myLocation = {lat: -1.2921, lng: 36.8219}; // Replace with your location's latitude and longitude
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: myLocation
+    });
+    var marker = new google.maps.Marker({
+        position: myLocation,
+        map: map
+    });
+}
+
+    </script>
 
   </body>
   </html>

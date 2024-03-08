@@ -1882,15 +1882,18 @@ h3.quote::before {
 
 /* Caption text */
 .text {
-  color: #020007;
+  color: white; /* Change text color to white for better contrast */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add text shadow for visibility on any background */
   font-size: 30px;
   padding: 8px 12px;
   position: absolute;
   bottom: 8px;
   width: 100%;
   text-align: center;
-  font-family: 'Great Vibes', cursive;
+  font-family: 'Poppins', 'Roboto', sans-serif; /* Update to a more modern font family */
+  font-weight: bold;
 }
+
 
 
 

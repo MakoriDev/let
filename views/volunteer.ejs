@@ -96,11 +96,8 @@
 					
 
 					<li class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link">Blog +</a>
-						<div class="navbar-dropdown align-right">
-							
-							<a class="navbar-item" href="/blog-single">Blog Single</a>
-						</div>
+						<a class="navbar-link" href="/blog/all">Blog +</a>
+						
 					</li>
 					
 					<li class="navbar-item">
@@ -149,19 +146,15 @@
 			<div class="column is-6-desktop is-6-tablet">
 				<span class="text-color">Join With Us</span>
 				<h2 class="mb-5 text-md">Become A Volunteer</h2>
-				<form action="#" class="volunteer-form" onsubmit="submitForm(event)">
+				<form action="/volunteer" class="volunteer-form" onsubmit="submitForm(event)">
 					<div class="mb-4">
 						<input type="text" class="input" placeholder="Full Name" required>
 					</div>
-					<div class="mb-4">
-						<input type="email" class="input" placeholder="Emaill Address" required>
-					</div>
+					
 					<div class="mb-4">
 						<input type="text" class="input" placeholder="Phone Number" required>
 					</div>
-					<div class="mb-4">
-						<input type="text" class="input" placeholder="Adress " required>
-					</div>
+					
 					<div class="mb-4">
 						<input type="text" class="input" placeholder="Occupation">
 					</div>
@@ -205,7 +198,7 @@
 	function redirectToIndex() {
 		// Redirect to the index page after a short delay
 		setTimeout(() => {
-			window.location.href = '/index.html'; // Replace 'index.html' with the desired URL of your index page
+			window.location.href = '/'; // Replace 'index.html' with the desired URL of your index page
 		}, 3000); // Adjust the delay (in milliseconds) as needed
 	}
 </script>

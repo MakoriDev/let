@@ -5,6 +5,9 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 require('dotenv').config();
 
+
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -38,6 +41,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Middleware to parse request bodies
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// import and use volunteer Route
+
+const volunteerRoutes = require('./routes/volonteeRoute')(pool);
+app.use('/', volunteerRoutes);
+
 
 // Import and use blogRoutes with MySQL pool
 const blogRoutes = require('./routes/blogRoutes')(pool); // Make sure your blogRoutes are adapted for MySQL
@@ -79,6 +88,7 @@ pages.forEach(page => {
 app.use((req, res) => {
   res.status(404).render('404'); // Use render for 404.ejs
 });
+
 
 
 
