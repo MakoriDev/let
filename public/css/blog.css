@@ -1,0 +1,38 @@
+/* Container for each blog post */
+.blog-post {
+    background-color: #fff; /* Light background to pop out from a darker page background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow to create "pop out" effect */
+    padding: 20px;
+    margin-bottom: 20px; /* Space between blog posts */
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+  }
+  
+  /* Style for blog titles */
+  .blog-post h2 a {
+    color: orange; /* Or any color you prefer */
+    text-decoration: none; /* Removes underline from links */
+    transition: color 0.2s; /* Smooth transition for hover effect */
+  }
+  
+  /* Blog title hover effect */
+  .blog-post h2 a:hover {
+    color: black; /* Darker shade when hovered */
+  }
+  
+  /* Hover effect to "lift" the blog post */
+  .blog-post:hover {
+    transform: translateY(-5px); /* Move the post up by 5px on hover */
+  }
+  
+  /* Make the title more dominant */
+  .blog-post h2 {
+    font-size: 1.5em; /* Larger font size */
+    margin-bottom: 0.5em; /* Spacing between title and content */
+  }
+  
+  /* Overall page padding and alignment */
+  .container1 {
+    padding: 40px;
+    background-color: #f0f0f0; /* Slightly darker background for the overall page */
+  }
+  
