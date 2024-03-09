@@ -33,9 +33,10 @@
         <!-- Single blog post details -->
         <div class="blog-item-content">
             <h2 class="mt-4"><%= blog.title %></h2>
-            <p><%= blog.content %></p>
+            <div><%- blog.content %></div> <!-- Display full content -->
             <!-- You can add more details like author, date, etc., here -->
         </div>
+        
     </div>
     
 </section>

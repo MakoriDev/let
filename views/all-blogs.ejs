@@ -109,18 +109,21 @@
     <h1>All Blog Posts</h1>
    
     <div class="blog-list">
-        <% blogs.forEach(function(blog) { %>
-            <div class="blog-post">
-                <h2><a href="/blog/blog-single/<%= blog.id %>"><%= blog.title %></a></h2>
-                <% if(blog.content) { %>
-                    <p><%= blog.content.substring(0, 100) %>...</p>
-                <% } else { %>
-                    <p>No content available.</p>
-                <% } %>
-                <!-- More blog details -->
-            </div>
-        <% }); %>
-    </div>
+		<% blogs.forEach(function(blog) { %>
+			<div class="blog-post">
+				<h2><a href="/blog/blog-single/<%= blog.id %>"><%= blog.title %></a></h2>
+				<% if(blog.content) { %>
+					<div><%- blog.content.substring(0, 100) %>...</div> <!-- Display excerpt -->
+				<% } else { %>
+					<p>No content available.</p>
+				<% } %>
+				<!-- More blog details -->
+			</div>
+		<% }); %>
+	</div>
+	
+	
+	
 
     <!-- Navigation back to home or other parts of your site -->
     <a href="/">Back to Home</a>

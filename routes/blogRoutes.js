@@ -9,17 +9,20 @@ module.exports = (pool) => {
     });
 
     // Handle form submission for adding a new blog at '/blog/new'
-    router.post('/new', async (req, res) => {
-        try {
-            const { title, content, author } = req.body;
-            const sql = 'INSERT INTO blogs (title, content, author) VALUES (?, ?, ?)';
-            await pool.query(sql, [title, content, author]);
-            res.redirect('/blog/all'); // After adding, redirect to see all blogs
-        } catch (error) {
-            console.error('Error saving new blog:', error);
-            res.status(500).send('Failed to add new blog');
-        }
-    });
+router.post('/new', async (req, res) => {
+    try {
+        const { title, content, author } = req.body;
+        const sql = 'INSERT INTO blogs (title, content, author) VALUES (?, ?, ?)';
+        
+        // Save content as it is, without replacing newline characters
+        await pool.query(sql, [title, content, author]);
+        res.redirect('/blog/all'); // After adding, redirect to see all blogs
+    } catch (error) {
+        console.error('Error saving new blog:', error);
+        res.status(500).send('Failed to add new blog');
+    }
+});
+
 
     // Display an individual blog post
     router.get('/blog-single/:id', async (req, res) => {
@@ -31,24 +34,36 @@ module.exports = (pool) => {
             if (!blog) {
                 return res.status(404).send('Blog post not found');
             }
+    
             res.render('blog-single', { blog });
         } catch (error) {
             console.error(error);
             res.status(500).send('Server error');
         }
     });
+    
+    
+
 
     // Display all blog posts at '/blog/all'
-    router.get('/all', async (req, res) => {
-        try {
-            const sql = 'SELECT * FROM blogs ORDER BY createdAt DESC';
-            const [blogs] = await pool.query(sql);
-            res.render('all-blogs', { blogs }); // Ensure 'all-blogs.ejs' is in the 'views' directory
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Error fetching all blog data');
-        }
-    });
+   // Display all blog posts at '/blog/all'
+// Display all blog posts at '/blog/all'
+router.get('/all', async (req, res) => {
+    try {
+        const sql = 'SELECT * FROM blogs ORDER BY createdAt DESC';
+        const [blogs] = await pool.query(sql);
+
+        // Replace consecutive line breaks with paragraph tags
+        blogs.forEach(blog => {
+            blog.content = `<p>${blog.content.replace(/<br>\s*<br>/g, '</p><p>')}</p>`;
+        });
+
+        res.render('all-blogs', { blogs }); // Ensure 'all-blogs.ejs' is in the 'views' directory
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching all blog data');
+    }
+});
 
     return router;
 };
