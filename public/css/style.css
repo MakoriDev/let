@@ -1937,3 +1937,18 @@ h3.quote::before {
     height: 60vh; /* Optionally adjust the height for larger screens */
   }
 }
+
+
+.mySlides p {
+  color: black; /* Set the text color */
+  padding: 10px; /* Add padding around the text */
+  text-shadow: #000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+  margin-top: 20px; /* Spacing from the top */
+  /* Add more styling as needed */
+}
+
+.mySlides br {
+  margin-bottom: 10px;
+}

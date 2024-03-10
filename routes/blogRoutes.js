@@ -53,12 +53,15 @@ router.get('/all', async (req, res) => {
         const sql = 'SELECT * FROM blogs ORDER BY createdAt DESC';
         const [blogs] = await pool.query(sql);
 
-        // Replace consecutive line breaks with paragraph tags
+        // Convert newline characters to HTML paragraphs
         blogs.forEach(blog => {
-            blog.content = `<p>${blog.content.replace(/<br>\s*<br>/g, '</p><p>')}</p>`;
+            // Split the content into paragraphs based on newline characters
+            // Then wrap each paragraph in <p> tags
+            blog.content = blog.content.split("\n").map(paragraph =>
+                `<p>${paragraph.trim()}</p>`).join('');
         });
 
-        res.render('all-blogs', { blogs }); // Ensure 'all-blogs.ejs' is in the 'views' directory
+        res.render('all-blogs', { blogs });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error fetching all blog data');
