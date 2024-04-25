@@ -44,8 +44,7 @@ app.use(express.json());
 
 // import and use volunteer Route
 
-const volunteerRoutes = require('./routes/volonteeRoute')(pool);
-app.use('/', volunteerRoutes);
+
 
 
 // Import and use blogRoutes with MySQL pool
@@ -67,14 +66,6 @@ app.get('/', async (req, res) => {
 const pages = [
   'about',
   'contact',
-  'donation',
-  'event',
-  'event-single',
-  'cause-single',
-  'confirmation',
-  'pricing',
-  'service',
-  'volunteer',
   'blog'
 ];
 
